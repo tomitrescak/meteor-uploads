@@ -1,14 +1,14 @@
 In this post I'll introduce two new packages using which you can easily setup a file upload service to your Meteor server. This solution has following perks:
 
-1. Uses the famous [jQuery file upload](https://blueimp.github.io/jQuery-File-Upload/) system from blueimp.
+1. Uses the famous [jQuery file upload](https://blueimp.github.io/jQuery-File-Upload/) system from blueimp. 
 	1. As a result you can upload any file size (default limit 11GB)
 	2. **Displays upload progress**
 	3. **Uploads can be canceled**
-	4. Images can be resized to various sizes using the *imagemagick*
+	4. Images can be resized to various sizes using the *imagemagick* 
 1. Saves and serves file from arbitrary folder on your server. This solves problems with hot-code reload, when files are saved into Meteor's *public* directory
 	1. Possibility to save files to subfolders
 	2. Possibility to rename files on the server
-1. Simple configuration and installation! No need to install 10+ packages like with Collection-FS solution
+1. Simple configuration and installation! No need to install 10+ packages like with Collection-FS solution 
 
 ```
 Please note that since we are using blueimp's juery solution, this solution has a full potential of performing client image resizes, chunked uploads, upload resume and more. These features will be gradually added. Pull requests are welcome!
@@ -40,7 +40,7 @@ Meteor.startup(function () {
   })
 });
 ```
-
+	
 Use template
 
 ```html
@@ -85,19 +85,19 @@ Meteor.startup(function () {
 Following *options* are available for *UploadServer.init(options)*:
 
 | Field        | Type | Default  | Description  |
-| ------------- |-------------| -----|
+| ------------- | ------------- | ----- | ------- |
 | tmpDir | String | null | Temporary upload directory
-| uploadDir | String | null | Path to the upload directory
+| uploadDir | String | null | Path to the upload directory  
 | uploadUrl | String | '/upload/' | Upload route
 | maxPostSize | int | 11000000000 | Maximum post size (11 GB)
 | minFileSize | int | 1 | Minimum file size
-| maxFileSize | int | 10000000000 | Maximum file size (10 GB)
+| maxFileSize | int | 10000000000 | Maximum file size (10 GB) 
 | acceptFileTypes | RegEx | /.+/i, | Accepted types of files (e.g. prohibit .exe)
 | imageTypes | RegEx | /\.(gif\|jpe?g\|png)$/i | Images which can be resized with *Imagemagick*
-| imageVersions | Object | {} | Defines the sizes of images which will be converted and saved to upload directory. For example `{thumbnailBig: {width: 400, height: 300}, thumbnailSmall: {width: 200, height: 100}}` |
+| imageVersions | Object | {} | Defines the sizes of images which will be converted and saved to upload directory. For example `{thumbnailBig: {width: 400, height: 300}, thumbnailSmall: {width: 200, height: 100}}` | 
 | getDirectory | function |  | functions which decides the subdirectory in which the file will be saved. In this function is not defined, no sub-directory is created. For example: `function(file, formData) { return '/my/sub/directory';` }
 |getFileName | function |  | Renames the file on the server. In no function is specified, file is saved with the original file name. For example: `function(file, formData) { return 'Saved-' + file; }
-| finished | function | | Callback
+| finished | function | | Callback 
 
 ### Client
 
