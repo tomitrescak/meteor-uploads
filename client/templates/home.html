@@ -6,4 +6,25 @@
     <h3>Images</h3>
 
     {{> upload_bootstrap contentType='images' fileTypes='' }}
+
+    <h3>PDFs</h3>
+
+    <p class="well">
+        {{> uploadInfo}}
+    </p>
 </template>
+
+<template name="uploadInfo">
+    <b>Upload Info</b><br>
+
+    {{#each files}}
+        <ul>
+            <li>Name: {{ name }}</li>
+            <li>Size: {{ size }} B</li>
+            <li>Type: {{ type }}</li>
+            <li>Last Modified: {{ lastModified }}</li>
+            <li>Last Modified Date: {{ lastModifiedDate }}</li>
+        </ul>
+    {{/each}}
+</template>
+
