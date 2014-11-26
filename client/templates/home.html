@@ -1,13 +1,14 @@
 <template name="home">
-    <h3>PDFs</h3>
 
     {{> upload_semantic_ui contentType='pdfs' fileTypes='.pdf' }}
 
-    <h3>Images</h3>
+    {{> upload_bootstrap contentType='images' fileTypes='video/*' heading="Single Video Autostart Upload" autoStart=true}}
 
-    {{> upload_bootstrap contentType='images' fileTypes='' }}
+	{{> upload_bootstrap contentType='images' fileTypes='.png' heading="Single Image Manual Upload" multiple=false autoStart=false}}
 
-    <h3>PDFs</h3>
+    {{> upload_bootstrap contentType='pdfs' fileTypes='.pdf' heading="Multiple Autostart Upload PDFs" multiple=true autoStart=true}}
+
+	{{> upload_bootstrap contentType='pdfs' fileTypes='.pdf' heading="Multiple Manual Upload PDFs" multiple=true autoStart=false}}
 
     <p class="well">
         {{> uploadInfo}}
