@@ -1,7 +1,7 @@
 Meteor.startup(function () {
   UploadServer.init({
-    tmpDir: '/Users/tomi/Documents/Uploads/tmp',
-    uploadDir: '/Users/tomi/Documents/Uploads/',
+    tmpDir: process.env.PWD + '/uploads/tmp',
+    uploadDir: process.env.PWD + '/uploads',
     getDirectory: function(file, formData) {
       return formData.contentType;
     },
