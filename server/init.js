@@ -5,7 +5,9 @@ Meteor.startup(function () {
     getDirectory: function(file, formData) {
       return formData.contentType;
     },
-    finished: function(file, folder, formFields) {
+    finished: function(file, folder, formData) {
+      // for reactivity you can write to the collection
+      // e.g. SomeCollection.insert({path: folder + '/' + file});
       console.log('Write to database: ' + folder + '/' + file);
     }
   })

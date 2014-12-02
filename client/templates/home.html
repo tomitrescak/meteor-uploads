@@ -1,29 +1,48 @@
 <template name="home">
-    <h3>PDFs</h3>
+    <div style="padding: 20px">
+        <h3>PDFs</h3>
+        {{> upload_semantic_ui contentType='pdfs' fileTypes='.pdf' }}
 
-    {{> upload_semantic_ui contentType='pdfs' fileTypes='.pdf' }}
+        <h3>Images</h3>
+        {{> upload_bootstrap contentType='images' fileTypes='' }}
 
-    <h3>Images</h3>
+        <!--<h3>Multiple</h3> NOT DONE-->
+        <!--{{> upload_bootstrap contentType='images' multiple=true fileTypes='' }}-->
 
-    {{> upload_bootstrap contentType='images' fileTypes='' }}
+        <h3>Uploading Following Files</h3>
+        <p class="well">
+            {{> uploadInfo filesToUpload}}
+        </p>
 
-    <h3>PDFs</h3>
-
-    <p class="well">
-        {{> uploadInfo}}
-    </p>
+        {{#if filesUploaded}}
+        <h3>Uploaded Following Files</h3>
+        <p>
+            {{> uploadedInfo filesUploaded}}
+        </p>
+        {{/if}}
+    </div>
 </template>
 
 <template name="uploadInfo">
     <b>Upload Info</b><br>
 
-    {{#each files}}
+    {{#each this}}
         <ul>
             <li>Name: {{ name }}</li>
             <li>Size: {{ size }} B</li>
             <li>Type: {{ type }}</li>
             <li>Last Modified: {{ lastModified }}</li>
             <li>Last Modified Date: {{ lastModifiedDate }}</li>
+        </ul>
+    {{/each}}
+</template>
+
+<template name="uploadedInfo">
+    {{#each this}}
+        <ul class="list-group" style="float: left; text-align: center; margin-right: 5px">
+            <a href="{{url}}" class="list-group-item active"><img src="{{src}}" style="width:100px;"></a>
+            <li class="list-group-item">{{ name }}<br>
+            {{ size }} B</li>
         </ul>
     {{/each}}
 </template>
