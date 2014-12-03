@@ -4,6 +4,7 @@ In this post I'll introduce two new packages using which you can easily setup a 
 	1. As a result you can upload any file size (default limit 11GB)
 	2. **Displays upload progress**
 	3. **Uploads can be canceled**
+	4. You can upload **multiple files**
 	4. Images can be resized to various sizes using the *imagemagick* 
 1. Saves and serves file from arbitrary folder on your server. This solves problems with hot-code reload, when files are saved into Meteor's *public* directory
 	1. Possibility to save files to subfolders
@@ -45,7 +46,7 @@ Use template
 
 ```html
 <template name="yourTemplate">
-	{{> upload_sematic_ui }}
+	{{> upload_bootstrap }}
 </template>
 ```
 
@@ -101,31 +102,14 @@ Following *options* are available for *UploadServer.init(options)*:
 
 ### Client
 
-On client we have a possibility to use pre-defined templates, existing for semantic-ui and bootstrap. We can use several upload forms on the page. We can distinguish what kind of content we are uploading, by providing the `contentType` parameter. We can also limit the file type available for the file picker using parameter `fileTypes`. Following is an example of how you can include the upload form on your page:
+On client we have a possibility to use pre-defined templates, existing for bootstrap. We can use several upload forms on the page. We can distinguish what kind of content we are uploading, by providing the `contentType` parameter. We can also limit the file type available for the file picker using parameter `fileTypes`. Following is an example of how you can include the upload form on your page:
 
 ```html
 <template name="home">
-    <h3>PDFs</h3>
-    {{> upload_semantic_ui contentType='pdfs' fileTypes='.pdf' }}
     <h3>Images</h3>
-    {{> upload_bootstrap contentType='images' fileTypes='.jpg' }}
+    {{> upload_bootstrap contentType='images' fileTypes='.jpg' multiple=true }}
 </template>
 ```
-
-If you wish to create your own template for uploading, you can use following call in the `rendered` callback to set up uploading functionality:
-
-```javascript
-Template['your_upload_template'].rendered = function () {
-  Uploader.render.call(this);
-};
-```
-
-When using this approach, your template MUST contain following:
-
-* element with class `.uploadFilePicker` holding the file picker
-* element with class `.uploadProgressHolder` holding the file picker
-* element with class `.uploadProgressBar` showing the progress bar
-* element with class `uploadProgressLabel` showing the progress label
 
 If you wish to use custom URL for your uploads this can be configured as following:
 
