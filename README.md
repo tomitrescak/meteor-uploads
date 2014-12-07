@@ -15,7 +15,15 @@ In this post I'll introduce two new packages using which you can easily setup a 
 Please note that since we are using blueimp's juery solution, this solution has a full potential of performing client image resizes, chunked uploads, upload resume and more. These features will be gradually added. Pull requests are welcome!
 ```
 
-Demo application can be found on [Github]()
+#### Screeenshots
+
+Single file image upload with preview:
+
+![Screenshot](https://dl.dropboxusercontent.com/u/3418607/Screenshots/Uploads-Single.png)
+
+Multiple file upload with queue:
+
+![Screenshot](https://dl.dropboxusercontent.com/u/3418607/Screenshots/Uploads.png)
 
 # Quick Start
 
