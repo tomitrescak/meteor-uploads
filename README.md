@@ -77,7 +77,7 @@ Meteor.startup(function () {
       return formData.contentType;
     },
     finished: function(file, folder, formFields) {
-      console.log('Write to database: ' + folder + '/' + file);
+      // perform a disk operation
     }
   })
 });
@@ -110,6 +110,18 @@ On client we have a possibility to use pre-defined templates, existing for boots
     {{> upload_bootstrap contentType='images' fileTypes='.jpg' multiple=true }}
 </template>
 ```
+
+We can also hook onto upload callbacks just like following:
+
+```javascript
+// file: client/init.js
+Meteor.startup(function() {
+  Uploader.finished = function(index, file) {
+    Uploads.insert({file: file.name});
+  }
+})
+```
+
 
 If you wish to use custom URL for your uploads this can be configured as following:
 

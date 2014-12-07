@@ -1,6 +1,4 @@
 Meteor.startup(function() {
-
-
   Uploader.finished = function(index, file) {
     if (!Session.get("UploadedFiles")) {
       Session.set("UploadedFiles", []);
@@ -12,8 +10,8 @@ Meteor.startup(function() {
 
     // for reactivity you can write to the collection
     // e.g. SomeCollection.insert({path: folder + '/' + file});
-    console.log('Write to database: ' + folder + '/' + file);
+    console.log('Write to database: ' + file.name);
 
-    Uploads.insert({folder: folder, file: file});
+    Uploads.insert({file: file.name});
   }
 })
