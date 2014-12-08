@@ -82,6 +82,7 @@ Meteor.startup(function () {
     tmpDir: '/Users/tomi/Documents/Uploads/tmp',
     uploadDir: '/Users/tomi/Documents/Uploads/',
     getDirectory: function(file, formData) {
+      // create a sub-directory in the uploadDir based on the content type (e.g. 'images')
       return formData.contentType;
     },
     finished: function(file, folder, formFields) {
