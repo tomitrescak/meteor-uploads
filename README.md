@@ -1,11 +1,16 @@
-In this post I'll introduce two new packages using which you can easily setup a file upload service to your Meteor server. This solution has following perks:
+```
+NEWS! Now with drag and drop support!!!
+```
+
+These packages allow you to easily setup a file upload service to your Meteor server. This solution has following perks:
 
 1. Uses the famous [jQuery file upload](https://blueimp.github.io/jQuery-File-Upload/) system from blueimp. 
 	1. As a result you can upload any file size (default limit 11GB)
 	2. **Displays upload progress**
 	3. **Uploads can be canceled**
 	4. You can upload **multiple files**
-	4. Images can be resized to various sizes using the *imagemagick* 
+	4. Images can be resized to various sizes using the *imagemagick*
+1. **NEW!** You can use drag and drop to upload your files!
 1. Saves and serves file from arbitrary folder on your server. This solves problems with hot-code reload, when files are saved into Meteor's *public* directory
 	1. Possibility to save files to subfolders
 	2. Possibility to rename files on the server
@@ -15,7 +20,7 @@ In this post I'll introduce two new packages using which you can easily setup a 
 Please note that since we are using blueimp's juery solution, this solution has a full potential of performing client image resizes, chunked uploads, upload resume and more. These features will be gradually added. Pull requests are welcome!
 ```
 
-#### Screeenshots
+# Screeenshots
 
 Single file image upload with preview:
 
@@ -24,6 +29,10 @@ Single file image upload with preview:
 Multiple file upload with queue:
 
 ![Screenshot](https://dl.dropboxusercontent.com/u/3418607/Screenshots/Uploads.png)
+
+Dropzone
+
+![Screenshot](https://dl.dropboxusercontent.com/u/3418607/screenshots/Uploads-Dropzone.png)
 
 # Quick Start
 
@@ -50,7 +59,7 @@ Meteor.startup(function () {
 });
 ```
 	
-Use template
+Use template with bootstrap support
 
 ```html
 <template name="yourTemplate">
@@ -59,6 +68,44 @@ Use template
 ```
 
 DONE!
+
+You can also use the drag and drop zone!
+
+```html
+<template name="yourTemplate">
+	{{> dropzone }}
+</template>
+```
+
+If you are using dropzone, you may want to set-up some css styles to give your user some visual cues:
+
+```css
+.jqDropZone {
+    background: lightgrey;
+    width: 150px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-weight: bold;
+}
+.jqDropZone.in {
+    width: 600px;
+    height: 200px;
+    line-height: 200px;
+    font-size: larger;
+}
+.jqDropZone.hover {
+    background: lawngreen;
+}
+.jqDropZone.fade {
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    opacity: 1;
+}
+```
 
 # Installation
 
@@ -73,6 +120,7 @@ I have separated these two packages, because often you will want to run your upl
 
 # Configuration
 ### Server
+
 First, we need to initialise the server and configure upload paths:
 
 ```javascript
@@ -111,12 +159,21 @@ Following *options* are available for *UploadServer.init(options)*:
 
 ### Client
 
-On client we have a possibility to use pre-defined templates, existing for bootstrap. We can use several upload forms on the page. We can distinguish what kind of content we are uploading, by providing the `contentType` parameter. We can also limit the file type available for the file picker using parameter `fileTypes`. Following is an example of how you can include the upload form on your page:
+On client we have a possibility to use pre-defined templates, existing for bootstrap or use the **dropzone**. We can use several upload forms on the page. We can distinguish what kind of content we are uploading, by providing the `contentType` parameter. We can also limit the file type available for the file picker using parameter `fileTypes`. Following is an example of how you can include the upload form on your page:
 
 ```html
 <template name="home">
     <h3>Images</h3>
     {{> upload_bootstrap contentType='images' fileTypes='.jpg' multiple=true formData=specificFormData }}
+</template>
+```
+
+or
+
+```html
+<template name="home">
+    <h3>Drag and drop image on the target area</h3>
+    {{> dropzone contentType='images' fileTypes='.jpg' multiple=true formData=specificFormData }}
 </template>
 ```
 

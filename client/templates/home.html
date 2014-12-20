@@ -2,6 +2,8 @@
     <div style="padding: 20px">
         <h3>Images</h3>
         {{> upload_bootstrap contentType='images' fileTypes='' startOnClick=true formData=myFormData }}
+        <h3>Dropzone</h3>
+        {{> dropzone contentType='images' fileTypes='' startOnClick=true formData=myFormData }}
 
         {{#if filesUploaded}}
         <h3>Uploaded Following Files</h3>

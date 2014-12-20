@@ -16,4 +16,4 @@ Template['uploadedInfo'].helpers({
       return this.url;
     } else return 'file_icon.png';
   }
-})
+});

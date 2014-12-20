@@ -3,7 +3,10 @@ Meteor.startup(function () {
     tmpDir: process.env.PWD + '/.uploads/tmp',
     uploadDir: process.env.PWD + '/.uploads/',
     getDirectory: function(file, formData) {
-      return formData.contentType;
+      if (formData) {
+        return formData.contentType;
+      }
+      return "";
     },
     finished: function(file, folder, formData) {
       // perform some disk operation
