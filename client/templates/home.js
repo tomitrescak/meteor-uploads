@@ -1,4 +1,7 @@
 Template['home'].helpers({
+  myFormData: function() {
+    return { myParameter1: "value1", myParameter2: "value2" }
+  },
   filesToUpload: function() {
     return Uploader.info.get();
   },
