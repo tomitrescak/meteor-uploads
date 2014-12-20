@@ -1,3 +1,5 @@
+# Introduction
+
 ```
 NEWS! Now with drag and drop support!!!
 ```
@@ -16,23 +18,9 @@ These packages allow you to easily setup a file upload service to your Meteor se
 	2. Possibility to rename files on the server
 1. Simple configuration and installation! No need to install 10+ packages like with Collection-FS solution 
 
-```
-Please note that since we are using blueimp's juery solution, this solution has a full potential of performing client image resizes, chunked uploads, upload resume and more. These features will be gradually added. Pull requests are welcome!
-```
+> Please note that since we are using blueimp's juery solution, this solution has a full potential of performing client image resizes, chunked uploads, upload resume and more. These features will be gradually added. Pull requests are welcome!
 
-# Screeenshots
-
-Single file image upload with preview:
-
-![Screenshot](https://dl.dropboxusercontent.com/u/3418607/Screenshots/Uploads-Single.png)
-
-Multiple file upload with queue:
-
-![Screenshot](https://dl.dropboxusercontent.com/u/3418607/Screenshots/Uploads.png)
-
-Dropzone
-
-![Screenshot](https://dl.dropboxusercontent.com/u/3418607/screenshots/Uploads-Dropzone.png)
+**For all the screen-shots, please scroll to the bottom of the page.**
 
 # Quick Start
 
@@ -204,6 +192,19 @@ If you wish to use custom URL for your uploads this can be configured as followi
 Uploader.uploadUrl = 'http://yoururl';
 ```
 
+# Screeenshots
+
+Single file image upload with preview:
+
+![Screenshot](https://dl.dropboxusercontent.com/u/3418607/Screenshots/Uploads-Single.png)
+
+Multiple file upload with queue:
+
+![Screenshot](https://dl.dropboxusercontent.com/u/3418607/Screenshots/Uploads.png)
+
+Dropzone
+
+![Screenshot](https://dl.dropboxusercontent.com/u/3418607/screenshots/Uploads-Dropzone.png)
 
 
 
