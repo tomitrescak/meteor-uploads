@@ -1,41 +1,179 @@
 <template name="home">
-    <div style="padding: 20px">
-        <h3>Images</h3>
-        {{> upload_bootstrap contentType='images' fileTypes='' startOnClick=true formData=myFormData }}
-        <h3>Dropzone</h3>
-        {{> dropzone contentType='images' fileTypes='' startOnClick=true formData=myFormData }}
+    <div class="container">
+        <header>
+            <h1>Meteor Upload Test</h1>
+        </header>
 
-        {{#if filesUploaded}}
-        <h3>Uploaded Following Files</h3>
-        <p>
-            {{> uploadedInfo filesUploaded}}
-        </p>
-        {{/if}}
-        <!-- The global progress bar -->
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading"><h2 class="panel-title">Bootstrap</h2></div>
+            <div class="panel-body">
+                <p>We display several possible configurations for the upload component.
+                <ul>
+                    <li><b>Uploads</b>, which holds list of uploads and its content is updated on client and reactively
+                        displayed. Please see configurations below.
+                    </li>
+                    <li><b>Items</b>, which for demonstration purposes also holds list of uploaded files and its content
+                        is updated on server and reactively displayed on page
+                    </li>
+                </ul>
+                </p>
+                <p>In the bottom of the page is a list of all uploaded files in the Uploads collection. We showcase also how to delete those files.</p>
+            </div>
+
+            <!-- List group -->
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <label>Simple</label>
+                    <pre class="well">&#123;&#123;&gt; upload_bootstrap &#125;&#125;</pre>
+                    {{> upload_bootstrap }}
+                </li>
+                <li class="list-group-item">
+                    <label>Multiple files</label>
+                    <pre class="well">&#123;&#123;&gt; upload_bootstrap multiple=true &#125;&#125;</pre>
+                    {{> upload_bootstrap multiple=true }}</li>
+                <li class="list-group-item">
+                    <label>Extension filter: .jpg and .png only</label>, for more info go to <a
+                        href="http://www.w3schools.com/tags/att_input_accept.asp">http://www.w3schools.com/tags/att_input_accept.asp</a>
+                    <pre class="well">&#123;&#123;&gt; upload_bootstrap fileTypes='.png,.jpg' &#125;&#125;
+or
+&#123;&#123;&gt; upload_bootstrap fileTypes='image/*' &#125;&#125;</pre>
+                    {{> upload_bootstrap fileTypes='.png,.jpg' }}
+                </li>
+                <li class="list-group-item">
+                    <label>Form data</label>
+
+                    <p>In this example we will send extra form data to the server, in which we tell to which directory
+                        we want to save the data, what will be the prefix and also flag telling application to save the
+                        data
+                        in the Items collection with a specific ID. The configuration of all these actions can be seen
+                        below
+                        in the <b>server configuration</b> section. Uploaded data is then reactively displayed on the
+                        page.
+                    </p>
+
+                    <pre class="well">&#123;&#123;&gt; upload_bootstrap fileTypes='image/*' formData=myFormData &#125;&#125;</pre>
+
+                    <pre class="well">//server configuration (file: /server/init.js)
+Meteor.startup(function () {
+  UploadServer.init({
+    tmpDir: process.env.PWD + '/.uploads/tmp',
+    uploadDir: process.env.PWD + '/.uploads/',
+    checkCreateDirectories: true,
+    getDirectory: function(fileInfo, formData) {
+      if (formData && formData.directoryName != null) {
+        return formData.directoryName;
+      }
+      return "";
+    },
+    getFileName: function(fileInfo, formData) {
+      if (formData && formData.prefix != null) {
+        return formData.prefix + '_' + fileInfo.name;
+      }
+      return fileInfo.name;
+    },
+    finished: function(fileInfo, formData) {
+      if (formData && formData._id != null) {
+        Items.update({_id: formData._id}, { $push: { uploads: fileInfo }});
+      }
+    }
+  });
+});</pre>
+
+                    <pre class="well">//client configuration (file: /templates/home/home.js)
+Template['home'].helpers({
+  myFormData: function() {
+    return { directoryName: 'images', prefix: this._id, _id: this._id }
+  }
+});
+
+// file: /client/init.js
+Meteor.startup(function() {
+  Uploader.finished = function(index, file) {
+    Uploads.insert(file);
+  }
+});</pre>
+
+                    <div class="well">
+                        {{#with item}}
+                            <label>Item name: </label>{{ name }}
+                            {{> upload_bootstrap fileTypes='image/*' formData=myFormData }}
+                            <p style="margin-top: 10px">
+                                {{> uploadedInfo uploads }}
+                            </p>
+                        {{/with}}
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Semantic UI (looks better when only Semantic UI is used)</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <label>Simple</label>
+                        <pre class="well">&#123;&#123;&gt; upload_semanticUI &#125;&#125;</pre>
+                        {{> upload_semanticUI }}
+                    </li>
+                    <li class="list-group-item">
+                        <label>Multiple files</label>
+                        <pre class="well">&#123;&#123;&gt; upload_semanticUI multiple=true &#125;&#125;</pre>
+                        {{> upload_semanticUI multiple=true }}</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Dropzone</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <label>Simple</label>
+                        <pre class="well">&#123;&#123;&gt; dropzone &#125;&#125;</pre>
+                        {{> dropzone }}
+                    </li>
+                    <li class="list-group-item">
+                        <label>With form data</label>
+                        <pre class="well">&#123;&#123;&gt; dropzone formData=myFormData &#125;&#125;</pre>
+                        {{> dropzone formData=myFormData }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="panel">
+            <h3>Uploaded Following Files</h3>
+            <p>
+                {{> uploadedInfo uploads }}
+            </p>
+        </div>
     </div>
 </template>
 
-<template name="uploadInfo">
-    <b>Upload Info</b><br>
-
-    {{#each this}}
-        <ul>
-            <li>Name: {{ name }}</li>
-            <li>Size: {{ size }} B</li>
-            <li>Type: {{ type }}</li>
-            <li>Last Modified: {{ lastModified }}</li>
-            <li>Last Modified Date: {{ lastModifiedDate }}</li>
-        </ul>
-    {{/each}}
-</template>
 
 <template name="uploadedInfo">
-    {{#each this}}
-        <ul class="list-group" style="float: left; text-align: center; margin-right: 5px">
-            <a href="{{url}}" class="list-group-item active"><img src="{{src}}" style="width:100px;"></a>
-            <li class="list-group-item">{{ name }}<br>
-            {{ size }} B</li>
+    <div class="documentList">
+        <ul class="list-inline">
+            {{#each this}}
+                <li class="documentItem">
+                    <a href="/upload/{{path}}"><img src="{{src}}"></a><br/>
+                    <label>{{ name }}</label> <br/>
+                    {{ size }} B<br>
+                    {{#if _id}}
+                        <a class="btn btn-danger deleteUpload">Delete</a>
+                    {{/if}}
+                </li>
+            {{/each}}
         </ul>
-    {{/each}}
+    </div>
 </template>
 

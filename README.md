@@ -1,7 +1,15 @@
 # Introduction
 
 ```
-NEWS! Now with drag and drop support!!!
+NEWS!
+
+23/1/2015:
+ - Full support for Semantic UI
+ - Breaking change in 'getFileInfo', 'getDirectory' and 'finished' callbacks. See documentation.
+ - Update the DEMO application to showcase all current possibilities
+ - Possibility to automatically create directories on server
+ - Possibility to delete files on server with UploadServer.delete(path)
+1/12/2014 Now with drag and drop support!!!
 ```
 
 These packages allow you to easily setup a file upload service to your Meteor server. This solution has following perks:
@@ -12,6 +20,7 @@ These packages allow you to easily setup a file upload service to your Meteor se
 	3. **Uploads can be canceled**
 	4. You can upload **multiple files**
 	4. Images can be resized to various sizes using the *imagemagick*
+1. **NEW!** Support for Semantic UI!
 1. **NEW!** You can use drag and drop to upload your files!
 1. Saves and serves file from arbitrary folder on your server. This solves problems with hot-code reload, when files are saved into Meteor's *public* directory
 	1. Possibility to save files to subfolders
@@ -42,16 +51,23 @@ Configure server
 Meteor.startup(function () {
   UploadServer.init({
     tmpDir: process.env.PWD + '/.uploads/tmp',
-    uploadDir: process.env.PWD + '/.uploads/'
+    uploadDir: process.env.PWD + '/.uploads/',
+    checkCreateDirectories: true //create the directories fro you
   })
 });
 ```
 	
-Use template with bootstrap support
+Use template with bootstrap *or* semantic UI support
 
 ```html
 <template name="yourTemplate">
 	{{> upload_bootstrap }}
+</template>
+```
+
+```html
+<template name="yourTemplate">
+	{{> upload_semanticUI }}
 </template>
 ```
 
@@ -109,7 +125,7 @@ I have separated these two packages, because often you will want to run your upl
 # Configuration
 ### Server
 
-First, we need to initialise the server and configure upload paths:
+First, we need to initialise the server and configure upload paths. We also allow server to create directories for us:
 
 ```javascript
 //file:/server/init.js
@@ -117,11 +133,12 @@ Meteor.startup(function () {
   UploadServer.init({
     tmpDir: '/Users/tomi/Documents/Uploads/tmp',
     uploadDir: '/Users/tomi/Documents/Uploads/',
-    getDirectory: function(file, formData) {
+    checkCreateDirectories: true,
+    getDirectory: function(fileInfo, formData) {
       // create a sub-directory in the uploadDir based on the content type (e.g. 'images')
       return formData.contentType;
     },
-    finished: function(file, folder, formFields) {
+    finished: function(fileInfo, formFields) {
       // perform a disk operation
     }
   })
@@ -133,6 +150,7 @@ Following *options* are available for *UploadServer.init(options)*:
 | Field        | Type | Default  | Description  |
 | ------------- | ------------- | ----- | ------- |
 | tmpDir | String | null | Temporary upload directory
+| checkCreateDirectories | Boolean | false | Creates the upload and tmp directory if it does not exist
 | uploadDir | String | null | Path to the upload directory  
 | uploadUrl | String | '/upload/' | Upload route
 | maxPostSize | int | 11000000000 | Maximum post size (11 GB)
@@ -141,18 +159,29 @@ Following *options* are available for *UploadServer.init(options)*:
 | acceptFileTypes | RegEx | /.+/i, | Accepted types of files (e.g. prohibit .exe)
 | imageTypes | RegEx | /\.(gif\|jpe?g\|png)$/i | Images which can be resized with *Imagemagick*
 | imageVersions | Object | {} | Defines the sizes of images which will be converted and saved to upload directory. For example `{thumbnailBig: {width: 400, height: 300}, thumbnailSmall: {width: 200, height: 100}}` | 
-| getDirectory | function |  | functions which decides the subdirectory in which the file will be saved. In this function is not defined, no sub-directory is created. For example: `function(file, formData) { return '/my/sub/directory';` }
-|getFileName | function |  | Renames the file on the server. In no function is specified, file is saved with the original file name. For example: `function(file, formData) { return 'Saved-' + file; }
+| getDirectory | function |  | functions which decides the subdirectory in which the file will be saved. In this function is not defined, no sub-directory is created. For example: `function(fileInfo, formData) { return '/my/sub/directory';` }
+| getFileName | function |  | Renames the file on the server. In no function is specified, file is saved with the original file name. For example: `function(fileInfo, formData) { return 'Saved-' + file.name; }`
 | finished | function | | Callback 
+
+In callbacks we pass the `fileInfo` with the following structure:
+
+| Field        | Type | Description |
+| ------------- | ------------- | ------------- |
+| name | String | File name
+| size | Number | Size in Bytes
+| type | String | MIME file type (e.g. 'text/html')
+| path | String | Path relative to upload directory
+| url  | String | Full url to the uploaded file
+
 
 ### Client
 
-On client we have a possibility to use pre-defined templates, existing for bootstrap or use the **dropzone**. We can use several upload forms on the page. We can distinguish what kind of content we are uploading, by providing the `contentType` parameter. We can also limit the file type available for the file picker using parameter `fileTypes`. Following is an example of how you can include the upload form on your page:
+On client we have a possibility to use pre-defined templates for **Bootstrap** or **Semantic UI**, or use the **dropzone**. We can use several upload forms on the page. We can provide extra data to upload control via `formData` parameter. We can also limit the file type available for the file picker using parameter `fileTypes`. Following is an example of how you can include the upload form on your page:
 
 ```html
 <template name="home">
     <h3>Images</h3>
-    {{> upload_bootstrap contentType='images' fileTypes='.jpg' multiple=true formData=specificFormData }}
+    {{> upload_bootstrap fileTypes='.jpg' multiple=true formData=specificFormData }}
 </template>
 ```
 
@@ -179,8 +208,8 @@ We can also hook onto upload callbacks just like following:
 ```javascript
 // file: client/init.js
 Meteor.startup(function() {
-  Uploader.finished = function(index, file) {
-    Uploads.insert({file: file.name});
+  Uploader.finished = function(fileInfo, templateContext) {
+    Uploads.insert(fileInfo);
   }
 })
 ```
@@ -191,6 +220,12 @@ If you wish to use custom URL for your uploads this can be configured as followi
 ```javascript
 Uploader.uploadUrl = 'http://yoururl';
 ```
+
+# Troubleshooting
+
+* **503 (Service Unavailable)** can have following two reasons
+    * You have incorrectly set up your directories for upload or directories have no rights for writing. Please check your server console for any messages.
+    * If server console is clean, the problem could be on client with JS debugging tools such as Firebug. Please disable any JS debugging tool and restart your browser. Problem should disappear.
 
 # Screeenshots
 

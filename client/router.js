@@ -4,7 +4,19 @@ Router.configure({
 
 Router.map(function () {
   this.route('home', {
-    path: '/'
+    path: '/',
+    waitOn: function() {
+      return [
+        Meteor.subscribe('items'),
+        Meteor.subscribe('uploads')
+      ];
+    },
+    data: function() {
+      return {
+        item: Items.findOne(),
+        uploads: Uploads.find()
+      }
+    }
   });
 });
 

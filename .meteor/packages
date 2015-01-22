@@ -3,6 +3,7 @@ nooitaf:semantic-ui
 iron:router
 tomi:upload-server
 tomi:upload-jquery
-ian:bootstrap-3
 standard-app-packages
 
+reactive-var
+ian:bootstrap-3
