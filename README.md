@@ -1,18 +1,16 @@
+# News
+
+* 23/1/2015:
+    *  Full support for Semantic UI
+    * Breaking change in 'getFileInfo', 'getDirectory' and 'finished' callbacks, which is now passing `fileInfo` object instead of just a file name and folder. See documentation.
+    * Possibility to automatically create directories on server
+    * Possibility to delete files on server with UploadServer.delete(path), see DEMO
+    * Possibility to easily modify the looks of the upload component or even add new upload templates for various frameworks by modifying the Uploader.UI.<framework> classes
+    * Several bug fixes
+    * Update the DEMO application to showcase all current possibilities
+* 1/12/2014 Now with drag and drop support!!!
+
 # Introduction
-
-```
-NEWS!
-
-23/1/2015:
- - Full support for Semantic UI
- - Breaking change in 'getFileInfo', 'getDirectory' and 'finished' callbacks, which is now passing `fileInfo` object instead of just a file name and folder. See documentation.
- - Possibility to automatically create directories on server
- - Possibility to delete files on server with UploadServer.delete(path), see DEMO
- - Possibility to easily modify the looks of the upload component or even add new upload templates for various frameworks by modifying the Uploader.UI.<framework> classes
- - Several bug fixes
- - Update the DEMO application to showcase all current possibilities
-1/12/2014 Now with drag and drop support!!!
-```
 
 These packages allow you to easily setup a file upload service to your Meteor server. This solution has following perks:
 
