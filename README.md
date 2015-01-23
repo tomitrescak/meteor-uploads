@@ -2,7 +2,7 @@
 
 * 23/1/2015:
     *  Full support for Semantic UI
-    * Breaking change in 'getFileInfo', 'getDirectory' and 'finished' callbacks, which is now passing `fileInfo` object instead of just a file name and folder. See documentation.
+    * **Breaking change in 'getFileInfo', 'getDirectory' and 'finished' callbacks**, which is now passing `fileInfo` object instead of just a file name and folder. See documentation.
     * Possibility to automatically create directories on server
     * Possibility to delete files on server with UploadServer.delete(path), see DEMO
     * Possibility to easily modify the looks of the upload component or even add new upload templates for various frameworks by modifying the Uploader.UI.<framework> classes
@@ -52,7 +52,7 @@ Meteor.startup(function () {
   UploadServer.init({
     tmpDir: process.env.PWD + '/.uploads/tmp',
     uploadDir: process.env.PWD + '/.uploads/',
-    checkCreateDirectories: true //create the directories fro you
+    checkCreateDirectories: true //create the directories for you
   })
 });
 ```
