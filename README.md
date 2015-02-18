@@ -1,5 +1,8 @@
 # News
 
+* 18/2/2015:
+    * Full support for Cordova!
+
 * 23/1/2015:
     *  Full support for Semantic UI
     * **Breaking change in 'getFileInfo', 'getDirectory' and 'finished' callbacks**, which is now passing `fileInfo` object instead of just a file name and folder. See documentation.
@@ -55,6 +58,16 @@ Meteor.startup(function () {
     checkCreateDirectories: true //create the directories for you
   })
 });
+```
+
+Configure client (only necessary if deploying as a Cordova app)
+
+```javascript
+if (Meteor.isClient) {
+  Meteor.startup(function() {
+    Uploader.uploadUrl = Meteor.absoluteUrl("upload"); // Cordova needs absolute URL
+  });
+}
 ```
 	
 Use template with bootstrap *or* semantic UI support
