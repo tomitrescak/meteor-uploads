@@ -228,7 +228,7 @@ We can also hook onto upload callbacks just like following:
 ```javascript
 // file: client/init.js
 Meteor.startup(function() {
-  Uploader.finished = function(fileInfo, templateContext) {
+  Uploader.finished = function(index, fileInfo, templateContext) {
     Uploads.insert(fileInfo);
   }
 })
