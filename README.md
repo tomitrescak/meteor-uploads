@@ -177,7 +177,7 @@ Following *options* are available for *UploadServer.init(options)*:
 | acceptFileTypes | RegEx | /.+/i, | Accepted types of files (e.g. prohibit .exe)
 | imageTypes | RegEx | /\.(gif\|jpe?g\|png)$/i | Images which can be resized with *Imagemagick*
 | imageVersions | Object | {} | Defines the sizes of images which will be converted and saved to upload directory. For example `{thumbnailBig: {width: 400, height: 300}, thumbnailSmall: {width: 200, height: 100}}` | 
-| getDirectory | function |  | functions which decides the subdirectory in which the file will be saved. In this function is not defined, no sub-directory is created. For example: `function(fileInfo, formData) { return '/my/sub/directory';` }
+| getDirectory | function |  | functions which decides the subdirectory in which the file will be saved. If this function is not defined, no sub-directory is created. For example: `function(fileInfo, formData) { return '/my/sub/directory';` }
 | getFileName | function |  | Renames the file on the server. In no function is specified, file is saved with the original file name. For example: `function(fileInfo, formData) { return 'Saved-' + file.name; }`
 | finished | function | | Callback
 | cacheTime | int | 86400 | Cache time, set 0 to disable cache
