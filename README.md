@@ -2,9 +2,8 @@
 
 # News
 
-* 18/2/2015:
-    * Full support for Cordova!
-
+* 21/2/2015 - File caching now supported, configuration of mimeTypes to serve
+* 18/2/2015 - **Full support for Cordova!**
 * 23/1/2015:
     *  Full support for Semantic UI
     * **Breaking change in 'getFileInfo', 'getDirectory' and 'finished' callbacks**, which is now passing `fileInfo` object instead of just a file name and folder. See documentation.
@@ -154,6 +153,11 @@ Meteor.startup(function () {
     },
     finished: function(fileInfo, formFields) {
       // perform a disk operation
+    },
+    cacheTime: 100,
+    mimeTypes: {
+        "xml": "application/xml",
+        "vcf": "text/x-vcard"
     }
   })
 });
@@ -175,7 +179,9 @@ Following *options* are available for *UploadServer.init(options)*:
 | imageVersions | Object | {} | Defines the sizes of images which will be converted and saved to upload directory. For example `{thumbnailBig: {width: 400, height: 300}, thumbnailSmall: {width: 200, height: 100}}` | 
 | getDirectory | function |  | functions which decides the subdirectory in which the file will be saved. In this function is not defined, no sub-directory is created. For example: `function(fileInfo, formData) { return '/my/sub/directory';` }
 | getFileName | function |  | Renames the file on the server. In no function is specified, file is saved with the original file name. For example: `function(fileInfo, formData) { return 'Saved-' + file.name; }`
-| finished | function | | Callback 
+| finished | function | | Callback
+| cacheTime | int | 86400 | Cache time, set 0 to disable cache
+| mimeTypes | Object | see [here](https://github.com/tomitrescak/meteor-tomi-upload-server/blob/master/upload_server.js#L43-L56) | List of available mime types
 
 In callbacks we pass the `fileInfo` with the following structure:
 
