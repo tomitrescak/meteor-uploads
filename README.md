@@ -2,6 +2,8 @@
 
 # News
 
+* 27/2/2015 - Validation of files on Client and Server (see section Validation)
+* 26/2/2015 - Custom built templates
 * 21/2/2015 - File caching now supported, configuration of mimeTypes to serve
 * 18/2/2015 - **Full support for Cordova!**
 * 23/1/2015:
@@ -136,6 +138,7 @@ $ meteor add tomi:upload-jquery
 I have separated these two packages, because often you will want to run your upload service as a separate application. There are several options supported by blueimp, such as [Java, ASP, Ruby and more](https://github.com/blueimp/jQuery-File-Upload/wiki) or even [node.js Express server](https://www.npmjs.org/package/blueimp-file-upload-node) installed via NPM. If you wish to use self standing server, install only the *tomi:upload-jquery* package.
 
 # Configuration
+
 ### Server
 
 First, we need to initialise the server and configure upload paths. We also allow server to create directories for us:
@@ -234,11 +237,132 @@ Meteor.startup(function() {
 })
 ```
 
+If you have several different upload controls on a page and you can execute different callbacks by passing them to the template:
+
+```html
+<template name="home">
+    {{> upload_bootstrap callbacks=myCallbacks }}
+</template>
+```
+
+And then pass the **finished** in the callback from helper
+
+```javascript
+Template.home.helpers({
+  myCallbacks: function() {
+    return {
+        finished: function(index, fileInfo, context) { ... },
+        ...
+    }
+  }
+})
+```
 
 If you wish to use custom URL for your uploads this can be configured as following:
 
 ```javascript
 Uploader.uploadUrl = 'http://yoururl';
+```
+
+### Validation
+
+It is possible to validate the uploaded file both on client and on server.
+
+On **client** you pass the validation function via helper, just like for the *finished* callback:
+
+```html
+<template name="home">
+    {{> upload_bootstrap callbacks=myCallbacks }}
+</template>
+```
+
+And then pass the **finished** in the callback from helper
+
+```javascript
+Template.home.helpers({
+  myCallbacks: function() {
+    return {
+        ...
+        validate: function(file) { ... }
+    }
+  }
+})
+```
+
+On server, you can configure validation of both, *request* and the uploaded *file* using following two functions:
+
+```javascript
+//file:/server/init.js
+Meteor.startup(function () {
+  UploadServer.init({
+    ...
+    validateRequest: function(req) { return true; }
+    validateFile: function(req) { return true; }
+  })
+});
+```
+
+### Custom Templates
+
+It is easy to create a custom template.  Following is an example of such:
+
+Template:
+
+```html
+<template name="customUpload">
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" class="jqUploadclass" data-form-data='{{ submitData }}'>
+        {{#with infoLabel}}
+            {{ infoLabel}} <button class="start">StartUpload</button>
+            <div style="width: 200px; height: 30px; border: 1px solid black">
+                <div style="background: red; height: 30px; width: {{ progress }}">
+                    {{ progress }}
+                </div>
+            </div>
+        {{/with}}
+
+    </form>
+</template>
+```
+
+Javascript:
+
+```javascript
+Template.customUpload.created = function() {
+  Uploader.init(this);
+}
+
+Template.customUpload.rendered = function () {
+  Uploader.render.call(this);
+};
+
+Template.customUpload.events({
+  'click .start': function (e) {
+    Uploader.startUpload.call(Template.instance(), e);
+  }
+});
+
+Template.customUpload.helpers({
+  'infoLabel': function() {
+    var instance = Template.instance();
+
+    // we may have not yet selected a file
+    var info = instance.info.get()
+    if (!info) {
+      return;
+    }
+
+    var progress = instance.globalInfo.get();
+
+    // we display different result when running or not
+    return progress.running ?
+      info.name + ' - ' + progress.progress + '% - [' + progress.bitrate + ']' :
+      info.name + ' - ' + info.size + 'B';
+  },
+  'progress': function() {
+    return Template.instance().globalInfo.get().progress + '%';
+  }
+})
 ```
 
 # Troubleshooting
