@@ -174,6 +174,8 @@ Following *options* are available for *UploadServer.init(options)*:
 | checkCreateDirectories | Boolean | false | Creates the upload and tmp directory if it does not exist
 | uploadDir | String | null | Path to the upload directory  
 | uploadUrl | String | '/upload/' | Upload route
+| validateRequest | function | | function(request)
+| validateFile | function | | function(fileInfo)
 | maxPostSize | int | 11000000000 | Maximum post size (11 GB)
 | minFileSize | int | 1 | Minimum file size
 | maxFileSize | int | 10000000000 | Maximum file size (10 GB) 
