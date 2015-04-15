@@ -187,6 +187,7 @@ Following *options* are available for *UploadServer.init(options)*:
 | finished | function | | Callback
 | cacheTime | int | 86400 | Cache time, set 0 to disable cache
 | mimeTypes | Object | see [here](https://github.com/tomitrescak/meteor-tomi-upload-server/blob/master/upload_server.js#L43-L56) | List of available mime types
+| notFoundImage | String | null | If set, this is the name of an image within uploadDir which will be served as a 404 image, instead of the default text error message. Default value of null will 404 with text/html only.
 
 In callbacks we pass the `fileInfo` with the following structure:
 
