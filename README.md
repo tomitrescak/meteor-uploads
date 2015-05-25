@@ -176,8 +176,8 @@ Following *options* are available for *UploadServer.init(options)*:
 | checkCreateDirectories | Boolean | false | Creates the upload and tmp directory if it does not exist
 | uploadDir | String | null | Path to the upload directory  
 | uploadUrl | String | '/upload/' | Upload route
-| validateRequest | function | | function(request)
-| validateFile | function | | function(fileInfo)
+| validateRequest | function | | function(request) - **Warning** - Does not run in fibre, you have no access to collections
+| validateFile | function | | function(fileInfo) - **Warning** - Does not run in fibre, you have no access to collections
 | maxPostSize | int | 11000000000 | Maximum post size (11 GB)
 | minFileSize | int | 1 | Minimum file size
 | maxFileSize | int | 10000000000 | Maximum file size (10 GB) 
@@ -186,7 +186,7 @@ Following *options* are available for *UploadServer.init(options)*:
 | imageVersions | Object | {} | Defines the sizes of images which will be converted and saved to upload directory. For example `{thumbnailBig: {width: 400, height: 300}, thumbnailSmall: {width: 200, height: 100}}` | 
 | getDirectory | function |  | functions which decides the subdirectory in which the file will be saved. If this function is not defined, no sub-directory is created. For example: `function(fileInfo, formData) { return '/my/sub/directory';` }
 | getFileName | function |  | Renames the file on the server. In no function is specified, file is saved with the original file name. For example: `function(fileInfo, formData) { return 'Saved-' + file.name; }`
-| finished | function | | Callback
+| finished | function | | Callback - You have full access to collections, **but** you do not have access to Meteor.userId() since upload process runs in its own fiber.
 | cacheTime | int | 86400 | Cache time, set 0 to disable cache
 | mimeTypes | Object | see [here](https://github.com/tomitrescak/meteor-tomi-upload-server/blob/master/upload_server.js#L43-L56) | List of available mime types
 
