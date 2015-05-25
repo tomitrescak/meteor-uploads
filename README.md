@@ -18,6 +18,8 @@
 
 # Introduction
 
+**WARNING** If you plan to deploy your solution to free \*.meteor.com servers, this solution is not for you, since you have no write access outside of standard Meteor directories. Please use CollectionFS instead.
+
 These packages allow you to easily setup a file upload service to your Meteor server. This solution has following perks:
 
 1. Uses the famous [jQuery file upload](https://blueimp.github.io/jQuery-File-Upload/) system from blueimp. 
