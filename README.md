@@ -221,6 +221,20 @@ or
 </template>
 ```
 
+Now, you need to specify the `formData` in the helper:
+
+```javascript
+Template.home.helpers({
+  formData: function() {
+    return {
+      id: this._id,
+      other: this.other,
+      hard: 'Lolcats'
+    }
+  }
+});
+```
+
 Following *options* are available for the template:
 
 | Field        | Type | Default  | Description  |
