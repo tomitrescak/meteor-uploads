@@ -225,7 +225,7 @@ Now, you need to specify the `formData` in the helper:
 
 ```javascript
 Template.home.helpers({
-  formData: function() {
+  specificFormData: function() {
     return {
       id: this._id,
       other: this.other,
