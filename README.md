@@ -181,9 +181,11 @@ Following *options* are available for *UploadServer.init(options)*:
 | maxPostSize | int | 11000000000 | Maximum post size (11 GB)
 | minFileSize | int | 1 | Minimum file size
 | maxFileSize | int | 10000000000 | Maximum file size (10 GB) 
+| overwrite | Boolean | false | overwrites existing file, rather than adds numerical suffix
 | acceptFileTypes | RegEx | /.+/i, | Accepted types of files (e.g. prohibit .exe)
 | imageTypes | RegEx | /\.(gif\|jpe?g\|png)$/i | Images which can be resized with *Imagemagick*
 | imageVersions | Object | {} | Defines the sizes of images which will be converted and saved to upload directory. For example `{thumbnailBig: {width: 400, height: 300}, thumbnailSmall: {width: 200, height: 100}}` | 
+| crop | Boolean | false | Crops the image rather than resizes
 | getDirectory | function |  | functions which decides the subdirectory in which the file will be saved. If this function is not defined, no sub-directory is created. For example: `function(fileInfo, formData) { return '/my/sub/directory';` }
 | getFileName | function |  | Renames the file on the server. In no function is specified, file is saved with the original file name. For example: `function(fileInfo, formData) { return 'Saved-' + file.name; }`
 | finished | function | | Callback - You have full access to collections, **but** you do not have access to Meteor.userId() since upload process runs in its own fiber.
@@ -402,6 +404,5 @@ Multiple file upload with queue:
 Dropzone
 
 ![Screenshot](https://dl.dropboxusercontent.com/u/3418607/screenshots/Uploads-Dropzone.png)
-
 
 
