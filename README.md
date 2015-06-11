@@ -47,6 +47,14 @@ $ meteor add tomi:upload-server
 $ meteor add tomi:upload-jquery
 ```
 
+Install ImageMagick (if you plan to use image resizing)
+
+**If you want to use Imagemagick, follow [these](http://www.imagemagick.org/script/binary-releases.php) install instructions on your server**. Then install node tools for imagemagick.
+
+```bash
+npm install imagemagick
+```
+
 Create directory in the application root
 ```
 mkdir -p .uploads/tmp
@@ -404,5 +412,4 @@ Multiple file upload with queue:
 Dropzone
 
 ![Screenshot](https://dl.dropboxusercontent.com/u/3418607/screenshots/Uploads-Dropzone.png)
-
 
