@@ -52,7 +52,7 @@ Install ImageMagick (if you plan to use image resizing)
 **If you want to use Imagemagick, follow [these](http://www.imagemagick.org/script/binary-releases.php) install instructions on your server**. Then install node tools for imagemagick.
 
 ```bash
-npm install imagemagick
+npm install -g imagemagick
 ```
 
 Create directory in the application root
