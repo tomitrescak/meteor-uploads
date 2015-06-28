@@ -2,6 +2,7 @@
 
 # News
 
+* 29/6/2015 - Bugfixes, localisation 
 * 27/2/2015 - Validation of files on Client and Server (see section Validation)
 * 26/2/2015 - Custom built templates
 * 21/2/2015 - File caching now supported, configuration of mimeTypes to serve
@@ -291,6 +292,25 @@ If you wish to use custom URL for your uploads this can be configured as followi
 ```javascript
 Uploader.uploadUrl = 'http://yoururl';
 ```
+
+### Localisation
+
+All texts of the upload control can be set via following setting:
+
+```javascript
+	Uploader.localisation = {
+	browse: "Browse",
+	cancelled: "Cancelled",
+	remove: "Remove",
+	upload: "Upload",
+	done: "Done",
+	cancel: "Cancel"
+}
+```
+
+### Logging
+
+You can set the log level via `Uploader.logLevel = Uploader.logLevels.debug`
 
 ### Validation
 
