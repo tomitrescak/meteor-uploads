@@ -250,7 +250,7 @@ Following *options* are available for the template:
 
 | Field        | Type | Default  | Description  |
 | ------------- | ------------- | ----- | ------- |
-| contentType | String | null | Describes the content that is uploaded via this control. **This no longer is part of the 'formData' and needs to be added manually**
+| contentType | String | null | Describes the content that is uploaded via this control. This becomes part of the 'formData' 
 | fileTypes | String | null | Limits selection of files to specified extensions
 | multiple | bool | true | Allows to select and upload of multiple files at the same time
 | formData | Object | null | If necessary, we can send extra form data to the server, this is then available in callbacks under 'formData'
