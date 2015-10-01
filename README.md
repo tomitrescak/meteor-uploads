@@ -2,6 +2,7 @@
 
 # News
 
+* 2/10/2015 - Community is on fire! With their help, many new improvements are being included, such as dynamic from data.
 * 29/6/2015 - Bugfixes, localisation 
 * 27/2/2015 - Validation of files on Client and Server (see section Validation)
 * 26/2/2015 - Custom built templates
@@ -248,6 +249,8 @@ Template.home.helpers({
 });
 ```
 
+If you need to change the **formData** dynamically, you can specify it as one of the callbacks (see section Callbacks below).
+
 Following *options* are available for the template:
 
 | Field        | Type | Default  | Description  |
@@ -256,6 +259,8 @@ Following *options* are available for the template:
 | fileTypes | String | null | Limits selection of files to specified extensions
 | multiple | bool | true | Allows to select and upload of multiple files at the same time
 | formData | Object | null | If necessary, we can send extra form data to the server, this is then available in callbacks under 'formData'
+
+### Callbacks
 
 We can also hook onto upload callbacks just like following:
 
@@ -282,6 +287,7 @@ And then pass the **finished** in the callback from helper
 Template.home.helpers({
   myCallbacks: function() {
     return {
+    	formData: function() { return { id: "232323", other: Session.get("ReactiveParam") } },
         finished: function(index, fileInfo, context) { ... },
         ...
     }
