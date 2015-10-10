@@ -176,7 +176,7 @@ Meteor.startup(function () {
         "xml": "application/xml",
         "vcf": "text/x-vcard"
     }
-  })
+  });
 });
 ```
 
