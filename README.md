@@ -1,3 +1,6 @@
+[![Meteor Icon](http://icon.meteor.com/package/tomi:upload-jquery)](https://atmospherejs.com/tomi/upload-jquery)
+[![Meteor Icon](http://icon.meteor.com/package/tomi:upload-server)](https://atmospherejs.com/tomi/upload-server)
+
 ![Screenshot](https://dl.dropboxusercontent.com/u/3418607/Screenshots/Uploads-Single.png)
 
 # News
