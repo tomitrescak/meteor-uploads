@@ -77,7 +77,7 @@ Meteor.startup(function () {
     tmpDir: process.env.PWD + '/.uploads/tmp',
     uploadDir: process.env.PWD + '/.uploads/',
     checkCreateDirectories: true //create the directories for you
-  })
+  });
 });
 ```
 
@@ -180,7 +180,7 @@ Meteor.startup(function () {
         "xml": "application/xml",
         "vcf": "text/x-vcard"
     }
-  })
+  });
 });
 ```
 
@@ -203,7 +203,7 @@ Following *options* are available for *UploadServer.init(options)*:
 | imageVersions | Object | {} | Defines the sizes of images which will be converted and saved to upload directory. For example `{thumbnailBig: {width: 400, height: 300}, thumbnailSmall: {width: 200, height: 100}}` | 
 | crop | Boolean | false | Crops the image rather than resizes
 | getDirectory | function |  | functions which decides the subdirectory in which the file will be saved. If this function is not defined, no sub-directory is created. For example: `function(fileInfo, formData) { return '/my/sub/directory';` }
-| getFileName | function |  | Renames the file on the server. In no function is specified, file is saved with the original file name. For example: `function(fileInfo, formData) { return 'Saved-' + file.name; }`
+| getFileName | function |  | Renames the file on the server. If no function is specified, file is saved with the original file name. For example: `function(fileInfo, formData) { return 'Saved-' + file.name; }`
 | finished | function | | Callback - You have full access to collections, **but** you do not have access to Meteor.userId() since upload process runs in its own fiber.
 | cacheTime | int | 86400 | Cache time, set 0 to disable cache
 | mimeTypes | Object | see [here](https://github.com/tomitrescak/meteor-tomi-upload-server/blob/master/upload_server.js#L43-L56) | List of available mime types
