@@ -431,7 +431,7 @@ Template.customUpload.helpers({
     * You have incorrectly set up your directories for upload or directories have no rights for writing. Please check your server console for any messages.
     * If server console is clean, the problem could be on client with JS debugging tools such as Firebug. Please disable any JS debugging tool and restart your browser. Problem should disappear.
 
-# Screeenshots
+# Screenshots
 
 Single file image upload with preview:
 
