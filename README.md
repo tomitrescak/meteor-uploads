@@ -309,7 +309,7 @@ Uploader.uploadUrl = 'http://yoururl';
 ### Localisation
 
 All texts of the upload control can be set via following setting:
-
+va
 ```javascript
 	Uploader.localisation = {
 	browse: "Browse",
@@ -350,7 +350,7 @@ Template.home.helpers({
 })
 ```
 
-On server, you can configure validation of both, *request* and the uploaded *file* using following two functions:
+On server, you can configure validation of both, *request* and the uploaded *file* using the two functions below. **IMPORTANT** Validate function has to return a **description of error** in case validation fails (e.g. *validationFailed*). In case validation passes, function has to return *null*. Failed validation also returns code 403.
 
 ```javascript
 //file:/server/init.js
@@ -362,6 +362,8 @@ Meteor.startup(function () {
   })
 });
 ```
+
+
 
 ### Custom Templates
 
