@@ -220,6 +220,18 @@ In callbacks we pass the `fileInfo` with the following structure:
 | path | String | Path relative to upload directory
 | url  | String | Full url to the uploaded file
 
+#### Passing data from server back to client
+
+It is possible to pass data from server back to client upon a successfull upload. The easiest way is to expand the fileInfo object on the server and add any data that we need. For this, you can use a `finished` callback:
+
+```javascript
+UploadServer.init({
+   ...
+   finished(fileInfo, formFields) {
+      fileInfo.extraData = "12345676";
+   }
+});
+```
 
 ### Client
 
