@@ -2,6 +2,7 @@
 
 # News
 
+* 18/11/2015 - Yet another batch of bugfixes, this time concerning exception and validation handling.
 * 2/10/2015 - Community is on fire! With their help, many new improvements are being included, such as dynamic from data.
 * 29/6/2015 - Bugfixes, localisation 
 * 27/2/2015 - Validation of files on Client and Server (see section Validation)
