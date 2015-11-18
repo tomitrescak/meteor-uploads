@@ -352,18 +352,37 @@ Template.home.helpers({
 
 On server, you can configure validation of both, *request* and the uploaded *file* using the two functions below. **IMPORTANT** Validate function has to return a **description of error** in case validation fails (e.g. *validationFailed*). In case validation passes, function has to return *null*. Failed validation also returns code 403.
 
+Use `validateRequest` to cancel any upload that is not valid **BEFORE** it starts uploading and save on server resources. Use `validateFile` to validate the integrity of uploaded file **AFTER** it was uploaded on the server.
+
 ```javascript
 //file:/server/init.js
 Meteor.startup(function () {
   UploadServer.init({
     ...
-    validateRequest: function(req) { return true; }
-    validateFile: function(req) { return true; }
+    validateRequest: function(req) { 
+    	if (req.header["content-length"] > 1000) {
+    	    return "File is too long!";
+    	}
+    	return null; 
+    },
+    validateFile: function(file, req) {
+    	// e.g. read file content
+    	if (doSomethingWith(file.path)) {
+    	    return "Error Message";
+    	}
+    	return null; 
+    }
   })
 });
 ```
 
+In callbacks, *req* contains the request data and *file* contains a following structure:
 
+* `size` - file size in bytes
+* `path` - absolute path on server
+* `name` - file name
+* `type` - MIME type (e.g. application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
+* `mtime` - UTC of upload time
 
 ### Custom Templates
 
