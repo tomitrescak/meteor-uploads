@@ -460,6 +460,86 @@ Template.customUpload.helpers({
 })
 ```
 
+#### Material UI
+
+Thanks to @misteio, here is a little tutorial on how to add Material UI support to uploads via custom templates:
+
+> I did it with a custom CSS based on Materialize. 
+
+Hope this will help: 
+
+In your main template where you want the upload form, you have to add this: 
+`{{> customUpload fileTypes='.jpg' formData=uploadHeader callbacks=uploadCallbacks}}`
+
+Then create a custom template where you want following this :
+
+```html
+<template name="customUpload">
+    <form method="POST" enctype="multipart/form-data" class="uk-form">
+        <a class="uk-form-file md-btn">{{_ "chooseFile" }}
+            <input id="file_upload-select" type="file" class="jqUploadclass header_main_search_btn uk-button-link" data-form-data='{{ submitData }}' accept="{{ fileTypes }}">
+        </a>
+
+        {{#with infoLabel}}
+            {{ infoLabel}} <button class="header_main_search_btn uk-button-link start"><i class="md-icon material-icons">&#xE2C6;</i></button>
+            <div id="file_upload-progressbar" class="uk-progress">
+                <div class="uk-progress-bar" style="width:{{ progress }}">{{ progress }}</div>
+            </div>
+        {{/with}}
+    </form>
+</template>
+```
+
+And finally add the custom Javascript for the custom Template :
+
+```javascript
+Template.customUpload.created = function() {
+    Uploader.init(this);
+}
+
+Template.customUpload.rendered = function () {
+    Uploader.render.call(this);
+};
+
+Template.customUpload.events({
+    'click .start': function (e) {
+        Uploader.startUpload.call(Template.instance(), e);
+    }
+});
+
+Template.customUpload.helpers({
+    'infoLabel': function() {
+        var instance = Template.instance();
+
+        // we may have not yet selected a file
+        var info = instance.info.get()
+        if (!info) {
+            return;
+        }
+
+        var progress = instance.globalInfo.get();
+
+        // we display different result when running or not
+        return progress.running ?
+        info.name + ' - ' + progress.progress + '% - [' + progress.bitrate + ']' :
+        info.name + ' - ' + info.size + 'B';
+    },
+    'progress': function() {
+        return Template.instance().globalInfo.get().progress + '%';
+    },
+    'submitData': function() {
+        if (this.formData) {
+            this.formData['contentType'] = this.contentType;
+        } else {
+            this.formData = {contentType: this.contentType};
+        }
+        return typeof this.formData == 'string' ? this.formData : JSON.stringify(this.formData);
+    },
+})
+```
+
+And that's it. You can better custom it by yourself, just a little base.
+
 # Troubleshooting
 
 * **503 (Service Unavailable)** can have following two reasons
