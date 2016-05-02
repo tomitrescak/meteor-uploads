@@ -373,7 +373,7 @@ Meteor.startup(function () {
   UploadServer.init({
     ...
     validateRequest: function(req) { 
-    	if (req.header["content-length"] > 1000) {
+    	if (req.headers["content-length"] > 1000) {
     	    return "File is too long!";
     	}
     	return null; 
