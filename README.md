@@ -145,6 +145,10 @@ If you are using dropzone, you may want to set-up some css styles to give your u
 }
 ```
 
+# Deploying with MUP or MUPX?
+
+Mup deployments need no special attention, just make sure that the target upload directory has sufficient priviledges. For MUPX, please follow this thread (https://github.com/tomitrescak/meteor-uploads/issues/235) for instructions on how to setup MUPX.
+
 # Installation
 
 The installation is very simple and consists of installing two packages:
