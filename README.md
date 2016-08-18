@@ -1,3 +1,7 @@
+# Looking for maintainer (currently Deprecated)
+
+Due to busy schedule I will no longer be able to maintaine this project. I will gladly hand this over to someone. Package has more then **11.000 installs** so you will keep many users happy. Please write in the Issues page to let me know if you can take over.
+
 ![Screenshot](https://dl.dropboxusercontent.com/u/3418607/Screenshots/Uploads-Single.png)
 
 # News
