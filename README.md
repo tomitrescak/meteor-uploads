@@ -44,6 +44,8 @@ These packages allow you to easily setup a file upload service to your Meteor se
 	2. Possibility to rename files on the server
 1. Simple configuration and installation! No need to install 10+ packages like with Collection-FS solution 
 
+> Please note that this package won't work at the moment on meteor servers. But it does work if you have your own server.
+
 > Please note that since we are using blueimp's juery solution, this solution has a full potential of performing client image resizes, chunked uploads, upload resume and more. These features will be gradually added. Pull requests are welcome!
 
 **For all the screen-shots, please scroll to the bottom of the page.**
