@@ -1,14 +1,9 @@
-# Looking for maintainer (currently Deprecated)
-
-Due to busy schedule I will no longer be able to maintaine this project. I will gladly hand this over to someone. Package has more then **11.000 installs** so you will keep many users happy. Please write in the Issues page to let me know if you can take over.
-
-![Screenshot](https://dl.dropboxusercontent.com/u/3418607/Screenshots/Uploads-Single.png)
-
 # News
 
+* 09/08/2019 - Update the DEMO application to Meteor 1.8.1
 * 18/11/2015 - Yet another batch of bugfixes, this time concerning exception and validation handling.
 * 2/10/2015 - Community is on fire! With their help, many new improvements are being included, such as dynamic from data.
-* 29/6/2015 - Bugfixes, localisation 
+* 29/6/2015 - Bugfixes, localisation
 * 27/2/2015 - Validation of files on Client and Server (see section Validation)
 * 26/2/2015 - Custom built templates
 * 21/2/2015 - File caching now supported, configuration of mimeTypes to serve
@@ -31,7 +26,7 @@ Due to busy schedule I will no longer be able to maintaine this project. I will 
 
 These packages allow you to easily setup a file upload service to your Meteor server. This solution has following perks:
 
-1. Uses the famous [jQuery file upload](https://blueimp.github.io/jQuery-File-Upload/) system from blueimp. 
+1. Uses the famous [jQuery file upload](https://blueimp.github.io/jQuery-File-Upload/) system from blueimp.
 	1. As a result you can upload any file size (default limit 11GB)
 	2. **Displays upload progress**
 	3. **Uploads can be canceled**
@@ -42,7 +37,7 @@ These packages allow you to easily setup a file upload service to your Meteor se
 1. Saves and serves file from arbitrary folder on your server. This solves problems with hot-code reload, when files are saved into Meteor's *public* directory
 	1. Possibility to save files to subfolders
 	2. Possibility to rename files on the server
-1. Simple configuration and installation! No need to install 10+ packages like with Collection-FS solution 
+1. Simple configuration and installation! No need to install 10+ packages like with Collection-FS solution
 
 > Please note that since we are using blueimp's juery solution, this solution has a full potential of performing client image resizes, chunked uploads, upload resume and more. These features will be gradually added. Pull requests are welcome!
 
@@ -94,7 +89,7 @@ Meteor.startup(function() {
   Uploader.uploadUrl = Meteor.absoluteUrl("upload"); // Cordova needs absolute URL
 });
 ```
-	
+
 Use template with bootstrap *or* semantic UI support
 
 ```html
@@ -205,11 +200,11 @@ Following *options* are available for *UploadServer.init(options)*:
 | validateFile | function | | function(fileInfo) - **Warning** - Does not run in fibre, you have no access to collections
 | maxPostSize | int | 11000000000 | Maximum post size (11 GB)
 | minFileSize | int | 1 | Minimum file size
-| maxFileSize | int | 10000000000 | Maximum file size (10 GB) 
+| maxFileSize | int | 10000000000 | Maximum file size (10 GB)
 | overwrite | Boolean | false | overwrites existing file, rather than adds numerical suffix
 | acceptFileTypes | RegEx | /.+/i, | Accepted types of files (e.g. prohibit .exe)
 | imageTypes | RegEx | /\.(gif\|jpe?g\|png)$/i | Images which can be resized with *Imagemagick*
-| imageVersions | Object | {} | Defines the sizes of images which will be converted and saved to upload directory. For example `{thumbnailBig: {width: 400, height: 300}, thumbnailSmall: {width: 200, height: 100}}` | 
+| imageVersions | Object | {} | Defines the sizes of images which will be converted and saved to upload directory. For example `{thumbnailBig: {width: 400, height: 300}, thumbnailSmall: {width: 200, height: 100}}` |
 | crop | Boolean | false | Crops the image rather than resizes
 | getDirectory | function |  | functions which decides the subdirectory in which the file will be saved. If this function is not defined, no sub-directory is created. For example: `function(fileInfo, formData) { return '/my/sub/directory';` }
 | getFileName | function |  | Renames the file on the server. If no function is specified, file is saved with the original file name. For example: `function(fileInfo, formData) { return 'Saved-' + file.name; }`
@@ -281,7 +276,7 @@ Following *options* are available for the template:
 
 | Field        | Type | Default  | Description  |
 | ------------- | ------------- | ----- | ------- |
-| contentType | String | null | Describes the content that is uploaded via this control. This becomes part of the 'formData' 
+| contentType | String | null | Describes the content that is uploaded via this control. This becomes part of the 'formData'
 | fileTypes | String | null | Limits selection of files to specified extensions
 | multiple | bool | true | Allows to select and upload of multiple files at the same time
 | formData | Object | null | If necessary, we can send extra form data to the server, this is then available in callbacks under 'formData'
@@ -380,18 +375,18 @@ Use `validateRequest` to cancel any upload that is not valid **BEFORE** it start
 Meteor.startup(function () {
   UploadServer.init({
     ...
-    validateRequest: function(req) { 
+    validateRequest: function(req) {
     	if (req.headers["content-length"] > 1000) {
     	    return "File is too long!";
     	}
-    	return null; 
+    	return null;
     },
     validateFile: function(file, req) {
     	// e.g. read file content
     	if (doSomethingWith(file.path)) {
     	    return "Error Message";
     	}
-    	return null; 
+    	return null;
     }
   })
 });
@@ -472,11 +467,11 @@ Template.customUpload.helpers({
 
 Thanks to @misteio, here is a little tutorial on how to add Material UI support to uploads via custom templates:
 
-> I did it with a custom CSS based on Materialize. 
+> I did it with a custom CSS based on Materialize.
 
-Hope this will help: 
+Hope this will help:
 
-In your main template where you want the upload form, you have to add this: 
+In your main template where you want the upload form, you have to add this:
 `{{> customUpload fileTypes='.jpg' formData=uploadHeader callbacks=uploadCallbacks}}`
 
 Then create a custom template where you want following this :
@@ -567,4 +562,3 @@ Multiple file upload with queue:
 Dropzone
 
 ![Screenshot](https://dl.dropboxusercontent.com/u/3418607/screenshots/Uploads-Dropzone.png)
-
